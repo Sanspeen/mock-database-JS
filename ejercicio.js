@@ -1,6 +1,7 @@
 
 
 const getArticles = ( callback ) =>{
+    console.log("Obteniendo datos...");
     setTimeout(() => {
         const articulos = [
             {item: "papa", medida: "kg", precio: 4000},
@@ -22,12 +23,36 @@ async function getArticlesToCar( article ){
     })
 }
 
+async function getPrice( car ){
+    return new Promise((res, rej) => {
+        setTimeout(() => {
+            let price;
+            for (let index = 0; index < car.length; index++) {
+                const element = car[index];
+                price += element.price;
+            }
+            res(price);
+        }, 1000);
+    })
+}
+
 async function addToCar( articles ){ 
-    for (let index = 0; index < articles.length; index++) {
+    console.log("--------------Agregando al carrito--------------")
+    let car = [];
+    let price = 0;
+    for (let index = 0; index < 2; index++) {
         const article = articles[Math.floor(Math.random()*articles.length)]
-        let car = await getArticlesToCar(article);
-        console.log("ok " + car.item)   
+        car.push(await getArticlesToCar(article));
+        console.log("Se ha agregado al carrito ==> " + car[index].item + " valor unitario: $" + car[index].precio)   
     }
+    setTimeout(() => {
+        for (let index = 0; index < car.length; index++) {
+            const element = car[index];
+            price += element.precio;
+        }        
+        console.log("\nTOTAL: $" + price);
+    }, 1000);
+    
 }
 
 getArticles( addToCar )
