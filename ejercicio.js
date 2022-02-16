@@ -4,11 +4,11 @@ const getArticles = ( callback ) =>{
     console.log("Obteniendo datos...");
     setTimeout(() => {
         const articulos = [
-            {item: "papa", medida: "kg", precio: 4000},
-            {item: "arroz", medida: "lb", precio: 2500},
-            {item: "arepas", medida: "unidad", precio: 3000},
-            {item: "leche", medida: "unidad", precio: 1500},
-            {item: "huevos", medida: "30", precio: 14000},
+            {item: "papa", measure: "kg", price: 4000},
+            {item: "arroz", measure: "lb", price: 2500},
+            {item: "arepas", measure: "unidad", price: 3000},
+            {item: "leche", measure: "unidad", price: 1500},
+            {item: "huevos", measure: "30", price: 14000},
         ]
         callback(articulos);
 
@@ -23,19 +23,6 @@ async function getArticlesToCar( article ){
     })
 }
 
-async function getPrice( car ){
-    return new Promise((res, rej) => {
-        setTimeout(() => {
-            let price;
-            for (let index = 0; index < car.length; index++) {
-                const element = car[index];
-                price += element.price;
-            }
-            res(price);
-        }, 1000);
-    })
-}
-
 async function addToCar( articles ){ 
     console.log("--------------Agregando al carrito--------------")
     let car = [];
@@ -43,12 +30,12 @@ async function addToCar( articles ){
     for (let index = 0; index < 2; index++) {
         const article = articles[Math.floor(Math.random()*articles.length)]
         car.push(await getArticlesToCar(article));
-        console.log("Se ha agregado al carrito ==> " + car[index].item + " valor unitario: $" + car[index].precio)   
+        console.log("Se ha agregado al carrito ==> " + car[index].item + " valor unitario: $" + car[index].price)   
     }
     setTimeout(() => {
         for (let index = 0; index < car.length; index++) {
             const element = car[index];
-            price += element.precio;
+            price += element.price;
         }        
         console.log("\nTOTAL: $" + price);
     }, 1000);
